@@ -1,0 +1,55 @@
+{
+  "name": "Copy Tools",
+  "description": "Help to copy and format text",
+  "version": "1.4",
+  "permissions": ["contextMenus",
+				  "activeTab",
+				  "clipboardRead",
+				  "notifications",
+				  "tabs",
+				  "storage",
+				  "http://*/*",
+				  "https://*/*"],
+  "background": {
+    "scripts": ["copy.js"]
+  },
+  "icons":{
+	"16":"copy.png",
+	"48":"copy.png",
+	"128":"copy.png"
+  },
+  "commands": {
+		  "format_first_line": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+1"
+            },
+            "description": "add dash to first line",
+            "global": true
+          },
+		  "reset_data": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+2"
+            },
+            "description": "Reset all data",
+            "global": true
+          },
+		  "copy_and_format": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+3"
+            },
+            "description": "copy text and format",
+            "global": true
+          },
+		   "concat_text": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+4"
+            },
+            "description": "Concat simple text without format",
+            "global": true
+          }
+        },
+	"browser_action": {
+	},
+    "options_page": "menu.html",
+  "manifest_version": 2
+}

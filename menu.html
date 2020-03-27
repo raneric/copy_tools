@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+	<div class="main-page">
+		<h3 class="offset-1">Choose dash -, dot •, square , Number</h3>
+	<hr/>
+		<div class="row">
+			<div class="offset-2">
+				<div class="alert alert-primary" id="option_choice">Current choice dot "•"</div>
+			</div>
+			<div class="offset-1 col-3 ">
+				<select class="form-control" name="list_symbol" id="list_choice">
+					<option>dot</option>
+					<option>dash</option>
+					<option>square</option>
+					<option>number</option>
+				</select><br/>
+				<button class="btn btn-primary" id="save"> save </button>
+				</div>
+		</div>
+		<hr/>
+		<div class="row">
+			<div class="offset-2 ">
+				<input class="form-control" placeholder="API Sercret..." type="password"/>
+			</div>
+			<div class="offset-1 col-3">
+				<button class="btn btn-primary" id="saveSecret"> save </button>
+			</div>
+		</div>
+	</div>
+		<script src="options_handler.js"></script>
+    </body>
+  </html>
