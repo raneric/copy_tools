@@ -41,9 +41,9 @@ const DASH = "-";
 const SQUARE = "";
 const MULTILINE_REGEX = /\n{2,20}/;
 const MULTI_TAB_REGEX = /\t{1,20}/;
-const API_URI = "https://v2.convertapi.com/convert/"
-const API_SECRET = "Secret=5ZDayFGt1GjG6j31"
-const API_FILE_STORE_STATE = "&StoreFile=true"
+const API_URI = "https://v2.convertapi.com/convert/";
+const API_SECRET = "";
+const API_FILE_STORE_STATE = "&StoreFile=true";
 const TAB_RPLC = " : ";
 var accepted_format = ["jpg", "jpeg", "gif", "png", "tif"];
 
