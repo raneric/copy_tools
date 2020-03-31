@@ -1,9 +1,8 @@
 chrome.commands.onCommand.addListener((command) => {
 	getListSymbol();
-	//getAllTabs();
 	switch (command) {
 		case "copy_and_format":
-			getClipboardData(false); // function param type boolean(formatFirstLineState, simpleText)
+			formatText(false); // function param type boolean(simpleText)
 			formatFirstLineState = false;
 			chrome.browserAction.setBadgeText({ text: badgetText });
 			break;
@@ -12,12 +11,12 @@ chrome.commands.onCommand.addListener((command) => {
 			chrome.browserAction.setBadgeText({ text: badgetText });
 			break;
 		case "format_first_line":
-			getClipboardData(false); // function param type boolean(formatFirstLineState, simpleText)
+			formatText(false); // function param type boolean(simpleText)
 			formatFirstLineState = true;
 			chrome.browserAction.setBadgeText({ text: badgetText });
 			break;
 		case "concat_text":
-			getClipboardData(true); // function param type boolean(formatFirstLineState, simpleText)
+			formatText(true); // function param type boolean(simpleText)
 			formatFirstLineState = false;
 			chrome.browserAction.setBadgeText({ text: badgetText });
 			break;
@@ -62,6 +61,10 @@ function onClickImageHandler(info, tab) {
 	copyToClipBoard(url);
 }
 
+/**
+*	Convert non-accepted file format
+*	@Param type String : file url to be converted
+*/
 function convertImage(url) {
 	let jpgUrl = "";
 	let fileArray = [];
@@ -92,6 +95,26 @@ function extentionToLowerCase(url) {
 //----------------------------------------------------------------------------------------------
 //---------------------------- TEXT ------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
+
+/**
+*	Main function for the text formatter
+**/
+function formatText(simpleText) {
+	let str = getClipboardData();
+
+	if (!simpleText) {
+		let formatedText = buildText(str);
+		globalText = (globalText != "") ? globalText + "\n\n" + formatedText : formatedText;
+	}
+
+	if (simpleText) {
+		let newText = str;
+		newText = newText.replace(/\n{3,20}/g, "\n");
+		newText = newText.replace(/\t{1,20}/g, TAB_RPLC);
+		globalText = (globalText != "") ? globalText + "\n\n" + newText : newText;
+	}
+	copyToClipBoard(globalText);
+}
 
 /**
 *	Format text by adding DASH or DOT
@@ -129,8 +152,8 @@ function deleteMultiNewLine(str) {
 }
 
 /**
-* Cut text to 1700<
-* @Param str : type String ;  text to cut
+*	Cut text to 1700<
+*	@Param str : type String ;  text to cut
 */
 function cutAllText(str) {
 	str = str.substr(0, 1699);
@@ -167,12 +190,17 @@ function getListSymbol() {
 	});
 }
 
+/**
+*	Split String with \n as separator
+**/
 function splitTextToArray(str) {
 	let textArray = str.split("\n");
-	//console.log(textArray);
 	return textArray;
 }
 
+/**
+*	Add number for list
+**/
 function addNumber(textArray) {
 	let strText = "";
 	let j = 1;
@@ -189,6 +217,35 @@ function addNumber(textArray) {
 	return strText;
 }
 
+/**
+*	Format tab with more than 2 column
+**/
+function formatMultiDTab(str) {
+	let array = splitTextToArray(str);
+	let newStr = "";
+	for (let i = 0; i < array.length; i++) {
+		newStr = newStr + "\n" + reverseArrayIndex(array[i]);
+	}
+	return newStr;
+}
+
+/**
+*	Revese 1 and 2 index in array
+**/
+function reverseArrayIndex(str) {
+	let array = splitTextTo3DArray(str);
+	let unit = (array[1] === "-") ? "" : array[1];
+	return array[0] + " : " + array[2] + " " + unit;
+}
+
+/**
+*	Split String with \t as separator
+**/
+function splitTextTo3DArray(str) {
+	let textArray = str.split("\t");
+	return textArray;
+}
+
 //----------------------------------------------------------------------------------------------
 //---------------------------- CLIPBOARD FUNCTION ----------------------------------------------
 //----------------------------------------------------------------------------------------------
@@ -198,7 +255,7 @@ function addNumber(textArray) {
 *	@Param formatFirstLineState: type boolean ; parm if first line need to be formated
 *	@Param simpleText: type boolean ; param if no need to format text
 **/
-function getClipboardData(simpleText) {
+function getClipboardData(str) {
 	const tempHtmlElement = document.createElement('textarea');
 	tempHtmlElement.style.position = 'absolute';
 	tempHtmlElement.style.left = '-9999px';
@@ -208,21 +265,9 @@ function getClipboardData(simpleText) {
 
 	document.execCommand('paste');
 
-	if (!simpleText) {
-		let formatedText = buildText(tempHtmlElement.value);
-		globalText = (globalText != "") ? globalText + "\n\n" + formatedText : formatedText;
-	}
-
-	if (simpleText) {
-		let newText = tempHtmlElement.value;
-		newText = newText.replace(/\n{3,20}/g, "\n");
-		newText = newText.replace(/\t{1,20}/g, TAB_RPLC);
-		globalText = (globalText != "") ? globalText + "\n\n" + newText : newText;
-
-	}
-
-	copyToClipBoard(globalText);
+	let textFromClipboard = tempHtmlElement.value
 	document.body.removeChild(tempHtmlElement);
+	return textFromClipboard;
 }
 
 /**
