@@ -186,6 +186,9 @@ function getListSymbol() {
 			case 'number':
 				listWithNumber = true;
 				break;
+			default:
+				listWithNumber = false;
+				LIST_SYMBOL = DOT;
 		}
 	});
 }
