@@ -1,19 +1,19 @@
-function save(){
+function save() {
 	let list_s = document.getElementById('list_choice').value;
 	chrome.storage.sync.set({
-		list_symbol:list_s,
-	}, function(){
+		list_symbol: list_s,
+	}, function () {
 		let current_choice = document.getElementById('option_choice');
-		current_choice.textContent = "Current choice : " + list_s;	
+		current_choice.textContent = "Choice : " + list_s;
 	});
 }
 
-function getCurrentValue(){
+function getCurrentValue() {
 	chrome.storage.sync.get({
-		list_symbol:'',
-	}, function(items) {
+		list_symbol: '',
+	}, function (items) {
 		let current_choice = document.getElementById('option_choice');
-		current_choice.textContent = "Current choice : " + items.list_symbol;
+		current_choice.textContent = "Choice : " + items.list_symbol;
 	});
 }
 document.addEventListener('DOMContentLoaded', getCurrentValue);
