@@ -113,9 +113,7 @@ function getImageExtentions(url) {
 
 function extentionToLowerCase(url) {
 	let urlExt = getImageExtentions(url);
-	if (urlExt == urlExt.toUpperCase()) {
-		url = url.substring(0, url.lastIndexOf(".") + 1) + urlExt.toLowerCase();
-	}
+	url = url.substring(0, url.lastIndexOf(".") + 1) + urlExt.toLowerCase();
 	return url;
 }
 //----------------------------------------------------------------------------------------------
