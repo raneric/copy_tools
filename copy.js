@@ -365,7 +365,7 @@ function getAllTabs() {
 }
 
 function addInfo(str) {
-	const INFO = "?utm_source=directindustry.com&utm_medium=product-placement&utm_campaign=hq_directindustry.productentry_online-portal&utm_content=C-00031727";
+	const INFO = "";
 	let url = str + INFO;
 	copyToClipBoard(url);
 }
